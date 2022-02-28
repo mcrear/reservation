@@ -4,4 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Dto\" />
+    <Folder Include="Models\ResponseModel\" />
+    <Folder Include="Models\RequestModel\" />
+  </ItemGroup>
+
 </Project>
