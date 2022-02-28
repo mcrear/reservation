@@ -21,8 +21,22 @@ namespace Reservation.Controllers
             _sessionService = sessionService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
+            var test = await _sessionService.GetSessionAsync(new Models.RequestModel.SessionRequestModel
+            {
+                Browser = new Models.RequestModel.Browser
+                {
+                    Name = "Chrome",
+                    Version = "47.0.0.12"
+                },
+                Connection = new Models.RequestModel.Connection
+                {
+                    IpAddress = "165.114.41.21",
+                    Port = "5117"
+                },
+                Type = 1
+            });
             return View();
         }
 

@@ -38,3 +38,4 @@ D:\Reservation\Reservation\obj\Debug\net5.0\ref\Reservation.dll
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.pdb
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.genruntimeconfig.cache
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.csproj.CopyComplete
+D:\Reservation\Reservation\bin\Debug\net5.0\Newtonsoft.Json.dll

@@ -1,15 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Reservation.Models.ConfigModel;
 using Reservation.Services;
 using Reservation.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Reservation
 {
@@ -29,6 +26,9 @@ namespace Reservation
             services.AddScoped<ISessionService, SessionService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IJourneyService, JourneyService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.Configure<ApiConfig>(Configuration.GetSection("API"));
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Dto\" />
-    <Folder Include="Models\ResponseModel\" />
-    <Folder Include="Models\RequestModel\" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
 </Project>

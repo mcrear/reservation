@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "GOtoZLTYO2Y8DkvB+rmXUyxmOBAfG5b9/qq0jv/1DhOGiFieEmbvuN8Ont80GxQm+U1KjtLPmTN0lp2qBM75Og==",
+  "dgSpecHash": "nCWKsMfxxzKuRpwmcLpr2lzmt4/oMXrmtEw2axW5WeBmFAjPiRNT1zt7FmTFVlXpVp73si8EkBuuzyl/ynsjtA==",
   "success": true,
   "projectFilePath": "D:\\Reservation\\Reservation\\Reservation.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\warni\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }
