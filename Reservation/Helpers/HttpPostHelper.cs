@@ -14,7 +14,7 @@ namespace Reservation.Helpers
 {
     public static class HttpPostHelper<TResponse>
     {
-        public static async Task<TResponse> PostDataAsync(IHttpContextAccessor httpContextAccessor, IHttpClientFactory clientFactory, IOptions<ApiConfig> config, string path, object request)
+        public static async Task<TResponse> PostDataAsync(IHttpClientFactory clientFactory, IOptions<ApiConfig> config, string path, object request)
         {
             using var client = clientFactory.CreateClient();
             if (config.Value.UseAuthorization)

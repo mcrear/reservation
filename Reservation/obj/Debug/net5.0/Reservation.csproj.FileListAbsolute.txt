@@ -9,7 +9,8 @@ D:\Reservation\Reservation\bin\Debug\net5.0\ref\Reservation.dll
 D:\Reservation\Reservation\bin\Debug\net5.0\Reservation.pdb
 D:\Reservation\Reservation\bin\Debug\net5.0\Reservation.Views.dll
 D:\Reservation\Reservation\bin\Debug\net5.0\Reservation.Views.pdb
-D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.csproj.AssemblyReference.cache
+D:\Reservation\Reservation\bin\Debug\net5.0\Newtonsoft.Json.dll
+D:\Reservation\Reservation\bin\Debug\net5.0\Shyjus.BrowserDetector.dll
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.GeneratedMSBuildEditorConfig.editorconfig
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.AssemblyInfoInputs.cache
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.AssemblyInfo.cs
@@ -33,9 +34,9 @@ D:\Reservation\Reservation\obj\Debug\net5.0\Razor\Views\_ViewStart.cshtml.g.cs
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.RazorTargetAssemblyInfo.cache
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.RazorTargetAssemblyInfo.cs
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.Views.pdb
+D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.csproj.CopyComplete
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.dll
 D:\Reservation\Reservation\obj\Debug\net5.0\ref\Reservation.dll
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.pdb
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.genruntimeconfig.cache
-D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.csproj.CopyComplete
-D:\Reservation\Reservation\bin\Debug\net5.0\Newtonsoft.Json.dll
+D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.csproj.AssemblyReference.cache

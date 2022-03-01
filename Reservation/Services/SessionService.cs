@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Reservation.Helpers;
 using Reservation.Models.ConfigModel;
+using Reservation.Models.Dto;
 using Reservation.Models.RequestModel;
 using Reservation.Models.ResponseModel;
 using Reservation.Services.Interfaces;
+using Shyjus.BrowserDetection;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -18,16 +22,83 @@ namespace Reservation.Services
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IOptions<ApiConfig> _config;
-        public SessionService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor, IOptions<ApiConfig> config)
+        private readonly IDataProtector _protector;
+        private readonly IBrowserDetector _browserDetector;
+        public SessionService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor, IOptions<ApiConfig> config, IDataProtectionProvider provider, IBrowserDetector browserDetector)
         {
-            _httpClientFactory = httpClientFactory;
             _httpContextAccessor = httpContextAccessor;
+            _httpClientFactory = httpClientFactory;
             _config = config;
+            _protector = provider.CreateProtector(GetType().FullName);
+            _browserDetector = browserDetector;
         }
 
-        public async Task<SessionResponse> GetSessionAsync(SessionRequestModel requestModel)
+        public async Task GetSessionAsync()
         {
-            return await HttpPostHelper<SessionResponse>.PostDataAsync(_httpContextAccessor, _httpClientFactory, _config, "/client/getsession", requestModel);
+
+
+            //if (_httpContextAccessor.HttpContext != null)
+            //{
+            //    var encryptedDeviceId = _protector.Protect(session.Data.DeviceId.ToString());
+            //    _httpContextAccessor.HttpContext.Response.Cookies.Append("DeviceId", encryptedDeviceId);
+
+            //    var encryptedSessionId = _protector.Protect(session.Data.SessionId.ToString());
+            //    _httpContextAccessor.HttpContext.Response.Cookies.Append("SessionId", encryptedSessionId);
+            //}
+        }
+
+        public async Task<DeviceSession> GetDeviceSession()
+        {
+            SessionResponse response = new SessionResponse();
+            var DeviceId = _httpContextAccessor.HttpContext.Request.Cookies["DeviceId"];
+            if (DeviceId == null)
+            {
+                var browser = _browserDetector.Browser;
+                var ClientIPAddr = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress?.ToString() == "::1" ? "165.114.41.21" : _httpContextAccessor.HttpContext.Connection.RemoteIpAddress?.ToString();
+                var port = _httpContextAccessor.HttpContext.Connection.RemotePort.ToString();
+
+                SessionRequestModel requestModel = new SessionRequestModel
+                {
+                    Browser = new Browser
+                    {
+                        Name = browser.Name,
+                        Version = browser.Version
+                    },
+                    Connection = new Connection
+                    {
+                        IpAddress = ClientIPAddr,
+                        Port = port
+                    },
+                    Type = 1
+                };
+
+                response = await HttpPostHelper<SessionResponse>.PostDataAsync(_httpClientFactory, _config, "client/getsession", requestModel);
+
+
+                if (_httpContextAccessor.HttpContext != null)
+                {
+                    var encryptedDeviceId = _protector.Protect(response.Data.DeviceId.ToString());
+                    _httpContextAccessor.HttpContext.Response.Cookies.Append("DeviceId", encryptedDeviceId);
+
+                    var encryptedSessionId = _protector.Protect(response.Data.SessionId.ToString());
+                    _httpContextAccessor.HttpContext.Response.Cookies.Append("SessionId", encryptedSessionId);
+                }
+
+                return new DeviceSession
+                {
+
+                    DeviceId = response.Data.DeviceId.ToString(),
+                    SessionId = response.Data.SessionId.ToString()
+                };
+
+            }
+
+            return new DeviceSession
+            {
+
+                DeviceId = _protector.Unprotect(_httpContextAccessor.HttpContext.Request.Cookies["DeviceId"]),
+                SessionId = _protector.Unprotect(_httpContextAccessor.HttpContext.Request.Cookies["SessionId"])
+            };
         }
     }
 }

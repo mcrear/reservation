@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using Reservation.Helpers;
 using Reservation.Models.ConfigModel;
+using Reservation.Models.RequestModel;
+using Reservation.Models.ResponseModel;
 using Reservation.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -20,6 +23,11 @@ namespace Reservation.Services
             _httpClientFactory = httpClientFactory;
             _httpContextAccessor = httpContextAccessor;
             _config = config;
+        }
+
+        public async Task<BusJourneysResponseModel> GetBusJourneys(BusJourneysRequestModel requestModel)
+        {
+            return await HttpPostHelper<BusJourneysResponseModel>.PostDataAsync( _httpClientFactory, _config, "journey/getbusjourneys", requestModel);
         }
     }
 }
