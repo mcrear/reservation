@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Reservation.Models;
 using Reservation.Models.ResponseModel;
+using Reservation.Models.ViewModel;
 using Reservation.Services.Interfaces;
 using Shyjus.BrowserDetection;
 using System;
@@ -33,32 +35,32 @@ namespace Reservation.Controllers
 
         public async Task<IActionResult> IndexAsync()
         {
-            
-            //var deviceSession = await _sessionService.GetDeviceSession();
-            //BusLocationsResponseModel locations = await _locaciontService.GetLocations(new Models.RequestModel.BusLocationsRequestModel
-            //{
-            //    DeviceSession = deviceSession,
-            //    Data = null
-            //});
+            return View(new HomeIndexViewModel());
+        }
 
-            //BusJourneysResponseModel journeys = await _journeyService.GetBusJourneys(new Models.RequestModel.BusJourneysRequestModel
-            //{
-            //    Date = DateTime.UtcNow.AddDays(2).ToString("yyyy-MM-dd"),
-            //    DeviceSession = new Models.RequestModel.DeviceSession
-            //    {
-            //        DeviceId = session.Data.DeviceId,
-            //        SessionId = session.Data.SessionId,
-            //    },
-            //    Language = language,
-            //    Data = new Models.RequestModel.BusJourneyRequest
-            //    {
-            //        OriginId = 349, // locations.Data.FirstOrDefault().Id,
-            //        DestinationId = 356,// locations.Data.LastOrDefault().Id,
-            //        DepartureDate = DateTime.UtcNow.AddDays(2).ToString("yyyy-MM-dd")
-            //    }
-            //});
+        [HttpPost]
+        public async Task<IActionResult> IndexAsync(HomeIndexViewModel model)
+        {
+            return View(model);
+        }
 
-            return View();
+        [HttpPost]
+        [Route("/home/getlocations")]
+        public async Task<IActionResult> GetLocations()
+        {
+            var deviceSession = await _sessionService.GetDeviceSession();
+
+            BusLocationsResponseModel locations = await _locaciontService.GetLocations(new Models.RequestModel.BusLocationsRequestModel
+            {
+                DeviceSession = deviceSession,
+                Data = null
+            });
+
+            var locationList = locations.Data.Select(
+              x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }
+              ).ToList();
+
+            return new JsonResult(locationList);
         }
 
         public IActionResult Privacy()
