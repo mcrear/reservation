@@ -23,8 +23,8 @@
                     <input type="date" id="dateInput" name="dateInput" value="new Date()" class="form-control" asp-for="DateInput">
                 </div>
                 <div class="col-xl-4 col-4">
-                    <button class="form-control" style="background-color:#707070">Bugün</button>
-                    <button class="form-control" style="background-color:#fff">Yarın</button>
+                    <input type="button" id="today" name="today" class="form-control" onclick="setToday()" style="background-color:#707070" value="Bugün" />
+                     <input type="button" id="tomorrow" name="tomorrow" class="form-control pt-2" onclick="setTomorrow()" style="background-color:#fff" value="Yarın" />
                 </div>
             </div>
         </div>
