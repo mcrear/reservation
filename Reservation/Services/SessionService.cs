@@ -8,10 +8,6 @@ using Reservation.Models.RequestModel;
 using Reservation.Models.ResponseModel;
 using Reservation.Services.Interfaces;
 using Shyjus.BrowserDetection;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -33,26 +29,16 @@ namespace Reservation.Services
             _browserDetector = browserDetector;
         }
 
-        public async Task GetSessionAsync()
-        {
-
-
-            //if (_httpContextAccessor.HttpContext != null)
-            //{
-            //    var encryptedDeviceId = _protector.Protect(session.Data.DeviceId.ToString());
-            //    _httpContextAccessor.HttpContext.Response.Cookies.Append("DeviceId", encryptedDeviceId);
-
-            //    var encryptedSessionId = _protector.Protect(session.Data.SessionId.ToString());
-            //    _httpContextAccessor.HttpContext.Response.Cookies.Append("SessionId", encryptedSessionId);
-            //}
-        }
-
         public async Task<DeviceSession> GetDeviceSession()
         {
-            SessionResponse response = new SessionResponse();
+
             var DeviceId = _httpContextAccessor.HttpContext.Request.Cookies["DeviceId"];
-            if (DeviceId == null)
+            var SessionId = _httpContextAccessor.HttpContext.Request.Cookies["SessionId"];
+
+            if (DeviceId == null || SessionId == null)
             {
+                SessionResponse response = new SessionResponse();
+
                 var browser = _browserDetector.Browser;
                 var ClientIPAddr = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress?.ToString() == "::1" ? "165.114.41.21" : _httpContextAccessor.HttpContext.Connection.RemoteIpAddress?.ToString();
                 var port = _httpContextAccessor.HttpContext.Connection.RemotePort.ToString();

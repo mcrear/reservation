@@ -21,27 +21,17 @@ namespace Reservation.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ISessionService _sessionService;
         private readonly ILocationService _locaciontService;
-        private readonly IJourneyService _journeyService;
-        private readonly IHttpContextAccessor _accessor;
 
-        public HomeController(ILogger<HomeController> logger, ISessionService sessionService, ILocationService locationService, IJourneyService journeyService, IHttpContextAccessor accessor)
+        public HomeController(ILogger<HomeController> logger, ISessionService sessionService, ILocationService locationService)
         {
             _logger = logger;
             _sessionService = sessionService;
             _locaciontService = locationService;
-            _journeyService = journeyService;
-            _accessor = accessor;
         }
 
         public async Task<IActionResult> IndexAsync()
         {
-            return View(new HomeIndexViewModel());
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> IndexAsync(HomeIndexViewModel model)
-        {
-            return View(model);
+            return View(new JourneySearchModel());
         }
 
         [HttpPost]
@@ -61,11 +51,6 @@ namespace Reservation.Controllers
               ).ToList();
 
             return new JsonResult(locationList);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

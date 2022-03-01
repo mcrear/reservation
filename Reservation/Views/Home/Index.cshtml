@@ -1,10 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model Reservation.Models.ViewModel.HomeIndexViewModel
+@model Reservation.Models.ViewModel.JourneySearchModel
 
 <div style="height:40px; background-color:#2F4EB4" class="mb-4"></div>
-<form method="post" asp-action="Index" asp-controller="Home">
+<form method="post" asp-action="Index" asp-controller="Journey">
     <div class="container">
         <div class="row mt-xl-4 mt-md-2">
             <div class="form-group col-xl-12 col-md-4 pt-2 pb-2 bg-white">
@@ -18,11 +18,11 @@
                 </select>
             </div>
             <div class="input-group col-xl-12 col-md-4 pt-2 pb-2 bg-white">
-                <div class="col-xl-6 col-7">
+                <div class="col-xl-8 col-8">
                     <label>Tarih</label>
                     <input type="date" id="dateInput" name="dateInput" value="new Date()" class="form-control" asp-for="DateInput">
                 </div>
-                <div class="col-xl-4 col-5">
+                <div class="col-xl-4 col-4">
                     <button class="form-control" style="background-color:#707070">Bugün</button>
                     <button class="form-control" style="background-color:#fff">Yarın</button>
                 </div>

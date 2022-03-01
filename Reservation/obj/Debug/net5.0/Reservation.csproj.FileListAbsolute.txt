@@ -25,7 +25,6 @@ D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.TagHelpers.input.cache
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.TagHelpers.output.cache
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.RazorCoreGenerate.cache
 D:\Reservation\Reservation\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
-D:\Reservation\Reservation\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
 D:\Reservation\Reservation\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 D:\Reservation\Reservation\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 D:\Reservation\Reservation\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
@@ -40,3 +39,4 @@ D:\Reservation\Reservation\obj\Debug\net5.0\ref\Reservation.dll
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.pdb
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.genruntimeconfig.cache
 D:\Reservation\Reservation\obj\Debug\net5.0\Reservation.csproj.AssemblyReference.cache
+D:\Reservation\Reservation\obj\Debug\net5.0\Razor\Views\Journey\Index.cshtml.g.cs

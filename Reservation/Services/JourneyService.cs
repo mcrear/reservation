@@ -7,6 +7,7 @@ using Reservation.Models.ResponseModel;
 using Reservation.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -27,6 +28,9 @@ namespace Reservation.Services
 
         public async Task<BusJourneysResponseModel> GetBusJourneys(BusJourneysRequestModel requestModel)
         {
+            var language = CultureInfo.CurrentCulture.IetfLanguageTag;
+            requestModel.Date = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss");
+            requestModel.Language = language;
             return await HttpPostHelper<BusJourneysResponseModel>.PostDataAsync( _httpClientFactory, _config, "journey/getbusjourneys", requestModel);
         }
     }

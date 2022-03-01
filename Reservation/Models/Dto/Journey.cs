@@ -24,7 +24,7 @@ namespace Reservation.Models.Dto
         [JsonProperty("destination")]
         public string Destination { get; set; }
 
-        [JsonProperty("depertura")]
+        [JsonProperty("departure")]
         public DateTime Departure { get; set; }
 
         [JsonProperty("arrival")]
