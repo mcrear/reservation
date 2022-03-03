@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Reservation.Helpers
@@ -17,21 +18,43 @@ namespace Reservation.Helpers
         public static async Task<TResponse> PostDataAsync(IHttpClientFactory clientFactory, IOptions<ApiConfig> config, string path, object request)
         {
             using var client = clientFactory.CreateClient();
-            if (config.Value.UseAuthorization)
+            try
             {
-                //var token = httpContextAccessor.HttpContext.Request.Cookies;
-                //if (token != null)
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(config.Value.AuthType, config.Value.Token);
-            }
-            var response = await client.PostAsync($"{config.Value.BaseUrl}/{path}",
-                new StringContent(
-                    JsonConvert.SerializeObject(request),
-                    Encoding.UTF8,
-                    "application/json")).ConfigureAwait(false);
-            var data = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                if (config.Value.UseAuthorization)
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(config.Value.AuthType, config.Value.Token);
+                }
 
-            var res = JsonConvert.DeserializeObject<TResponse>(data);
-            return res;
+                var response = await client.PostAsync($"{config.Value.BaseUrl}/{path}",
+                  new StringContent(
+                      JsonConvert.SerializeObject(request),
+                      Encoding.UTF8,
+                      "application/json")).ConfigureAwait(false);
+                var data = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                var res = JsonConvert.DeserializeObject<TResponse>(data);
+                return res;
+
+            }
+            catch (Exception ex)
+            {
+                //var res = JsonConvert.DeserializeObject<TResponse>(null);
+                //return res;
+                throw new AppException(ex.Message);
+            }
+            //if (config.Value.UseAuthorization)
+            //{
+            //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(config.Value.AuthType, config.Value.Token);
+            //}
+            //var response = await client.PostAsync($"{config.Value.BaseUrl}/{path}",
+            //    new StringContent(
+            //        JsonConvert.SerializeObject(request),
+            //        Encoding.UTF8,
+            //        "application/json")).ConfigureAwait(false);
+            //var data = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+            //var res = JsonConvert.DeserializeObject<TResponse>(data);
+            //return res;
         }
     }
 }

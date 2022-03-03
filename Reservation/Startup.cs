@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Reservation.Middleware;
 using Reservation.Models.ConfigModel;
 using Reservation.Services;
 using Reservation.Services.Interfaces;
@@ -54,6 +55,7 @@ namespace Reservation
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

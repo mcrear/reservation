@@ -31,60 +31,67 @@ namespace Reservation.Services
 
         public async Task<DeviceSession> GetDeviceSession()
         {
-
-            var DeviceId = _httpContextAccessor.HttpContext.Request.Cookies["DeviceId"];
-            var SessionId = _httpContextAccessor.HttpContext.Request.Cookies["SessionId"];
-
-            if (DeviceId == null || SessionId == null)
+            try
             {
-                SessionResponse response = new SessionResponse();
 
-                var browser = _browserDetector.Browser;
-                var ClientIPAddr = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress?.ToString() == "::1" ? "165.114.41.21" : _httpContextAccessor.HttpContext.Connection.RemoteIpAddress?.ToString();
-                var port = _httpContextAccessor.HttpContext.Connection.RemotePort.ToString();
+                var DeviceId = _httpContextAccessor.HttpContext.Request.Cookies["DeviceId"];
+                var SessionId = _httpContextAccessor.HttpContext.Request.Cookies["SessionId"];
 
-                SessionRequestModel requestModel = new SessionRequestModel
+                if (DeviceId == null || SessionId == null)
                 {
-                    Browser = new Browser
+                    SessionResponse response = new SessionResponse();
+
+                    var browser = _browserDetector.Browser;
+                    var ClientIPAddr = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress?.ToString() == "::1" ? "165.114.41.21" : _httpContextAccessor.HttpContext.Connection.RemoteIpAddress?.ToString();
+                    var port = _httpContextAccessor.HttpContext.Connection.RemotePort.ToString();
+
+                    SessionRequestModel requestModel = new SessionRequestModel
                     {
-                        Name = browser.Name,
-                        Version = browser.Version
-                    },
-                    Connection = new Connection
+                        Browser = new Browser
+                        {
+                            Name = browser.Name,
+                            Version = browser.Version
+                        },
+                        Connection = new Connection
+                        {
+                            IpAddress = ClientIPAddr,
+                            Port = port
+                        },
+                        Type = 1
+                    };
+
+                    response = await HttpPostHelper<SessionResponse>.PostDataAsync(_httpClientFactory, _config, "client/getsession", requestModel);
+
+
+                    if (_httpContextAccessor.HttpContext != null)
                     {
-                        IpAddress = ClientIPAddr,
-                        Port = port
-                    },
-                    Type = 1
-                };
+                        var encryptedDeviceId = _protector.Protect(response.Data.DeviceId.ToString());
+                        _httpContextAccessor.HttpContext.Response.Cookies.Append("DeviceId", encryptedDeviceId);
 
-                response = await HttpPostHelper<SessionResponse>.PostDataAsync(_httpClientFactory, _config, "client/getsession", requestModel);
+                        var encryptedSessionId = _protector.Protect(response.Data.SessionId.ToString());
+                        _httpContextAccessor.HttpContext.Response.Cookies.Append("SessionId", encryptedSessionId);
+                    }
 
+                    return new DeviceSession
+                    {
 
-                if (_httpContextAccessor.HttpContext != null)
-                {
-                    var encryptedDeviceId = _protector.Protect(response.Data.DeviceId.ToString());
-                    _httpContextAccessor.HttpContext.Response.Cookies.Append("DeviceId", encryptedDeviceId);
+                        DeviceId = response.Data.DeviceId.ToString(),
+                        SessionId = response.Data.SessionId.ToString()
+                    };
 
-                    var encryptedSessionId = _protector.Protect(response.Data.SessionId.ToString());
-                    _httpContextAccessor.HttpContext.Response.Cookies.Append("SessionId", encryptedSessionId);
                 }
 
                 return new DeviceSession
                 {
 
-                    DeviceId = response.Data.DeviceId.ToString(),
-                    SessionId = response.Data.SessionId.ToString()
+                    DeviceId = _protector.Unprotect(_httpContextAccessor.HttpContext.Request.Cookies["DeviceId"]),
+                    SessionId = _protector.Unprotect(_httpContextAccessor.HttpContext.Request.Cookies["SessionId"])
                 };
-
             }
-
-            return new DeviceSession
+            catch (System.Exception e)
             {
-
-                DeviceId = _protector.Unprotect(_httpContextAccessor.HttpContext.Request.Cookies["DeviceId"]),
-                SessionId = _protector.Unprotect(_httpContextAccessor.HttpContext.Request.Cookies["SessionId"])
-            };
+                throw new AppException(e.Message);
+            }
         }
     }
 }
