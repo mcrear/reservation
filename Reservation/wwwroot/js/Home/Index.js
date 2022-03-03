@@ -1,8 +1,18 @@
-﻿$(document).ready(function () {
+﻿// sayfa ilk ayağa kalktığında çalışacak olan fonksiyon
+$(document).ready(function () {
+    // lokasyon listelerinin doldurulması
     fillLocations();
+
+    // bir sonraki günün tarih alanına açılışta setlenmesi
     setTomorrow();
+
+    // datepicker içerisindeki alandan minimum tarih değeri yapılandırması
     setMin();
+
+    //Select2 nesneleri için search metodlarının tanımlanması
     search();
+
+    // Takas işlemi için görsele onClick eklenmesi
     changeId();
 });
 
@@ -139,16 +149,4 @@ function changeId() {
         $('#DestinationId').val(tempsource).trigger('change');
     })
 
-}
-
-function setExisting() {
-    var setSourceId = $("#SetSourceId").val();
-    if (setSourceId != null || setSourceId != 0) {
-        $('#SourceId').val(setSourceId).trigger('change');
-    }
-
-    var setDestinationId = $("#SetDestinationId").val();
-    if (setDestinationId != null || setDestinationId != 0) {
-        $('#DestinationId').val(setDestinationId).trigger('change');
-    }
 }

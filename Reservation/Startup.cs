@@ -20,9 +20,9 @@ namespace Reservation
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // kullanýlacak interfaceler için instance tanýmlarýnýn yapýlmasý
             services.AddBrowserDetection();
             services.AddControllersWithViews();
             services.AddScoped<ISessionService, SessionService>();
@@ -30,12 +30,10 @@ namespace Reservation
             services.AddScoped<IJourneyService, JourneyService>();
             services.AddHttpClient();
             services.AddHttpContextAccessor();
-            // services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession();
             services.Configure<ApiConfig>(Configuration.GetSection("API"));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -45,7 +43,6 @@ namespace Reservation
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseSession();
@@ -55,6 +52,8 @@ namespace Reservation
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // Hata yönetimi için kullanýlacak olan middleware katmanýnýn eklenmesi
             app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseEndpoints(endpoints =>
