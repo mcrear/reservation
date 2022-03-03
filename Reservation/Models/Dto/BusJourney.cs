@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Reservation.Models.Dto
 {
+    // sefer listesi dto nesnesi
     public class BusJourney : _Dto
     {
 

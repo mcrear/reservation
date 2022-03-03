@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Reservation.Models.RequestModel
 {
+    // yeni bir oturum bilgisi almak için oluşturulan model
     public class SessionRequestModel
     {
         [JsonProperty("type")]

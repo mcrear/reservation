@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace Reservation.Models.RequestModel
 {
+    /// <summary>
+    /// Sefer listesi için oluşturulan istek modelinin base request model içine eklenmesi
+    /// </summary>
     public class BusJourneysRequestModel : _BaseRequest<BusJourneyRequest>
     {
     }
 
+    // sefer listesi için oluşturulan istek model
     public class BusJourneyRequest
     {
         [JsonProperty("origin-id")]

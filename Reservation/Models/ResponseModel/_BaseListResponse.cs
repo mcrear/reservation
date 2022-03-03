@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace Reservation.Models.ResponseModel
 {
+    /// <summary>
+    /// Generic liste dönüşlerinin cast edildiği modeldir. Burada liste içerisinde bulunan değerler _dto ile imzalanmış olamalıdır.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class _BaseListResponse<T> where T : IEnumerable<_Dto>
     {
 

@@ -9,10 +9,14 @@ using System.Threading.Tasks;
 
 namespace Reservation.Middleware
 {
+    /// <summary>
+    /// Hata yönetimi için bir ara katman oluşturulması
+    /// </summary>
     public class ErrorHandlerMiddleware
     {
         private readonly RequestDelegate _next;
 
+        // Private olarak hazırlanan istek işleminin setlenmesi
         public ErrorHandlerMiddleware(RequestDelegate next)
         {
             _next = next;
@@ -22,10 +26,12 @@ namespace Reservation.Middleware
         {
             try
             {
+                // bir hata olmaması durumunda ara katmandan başarılı şekilde çıkılıp işleme devam edilmesi
                 await _next(context);
             }
             catch (Exception error)
             {
+                // ajax işlemlerinde karşılaşılacak olası hataların işlenmesi
                 var response = context.Response;
                 response.ContentType = "application/json";
 
@@ -45,6 +51,7 @@ namespace Reservation.Middleware
                         break;
                 }
 
+                // hata sonucunun error mesage olarak geri dönülmesi işlemi
                 var result = JsonSerializer.Serialize(new { message = error?.Message });
                 await response.WriteAsync(result);
             }

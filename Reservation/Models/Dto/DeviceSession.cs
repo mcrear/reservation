@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Reservation.Models.Dto
 {
+    // cihaza ait oturum bilgilerini tutan model
     public class DeviceSession
     {
         [JsonProperty("session-id")]

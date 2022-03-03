@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace Reservation.Models.ResponseModel
 {
+    /// <summary>
+    /// Tekil dönüşler için hazırlanmış olan base response modeldir. Burada kullanılacak olan nesneler _dto ile imzalanmış olmalıdır.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class _BaseResponse<T> where T : _Dto
     {
 

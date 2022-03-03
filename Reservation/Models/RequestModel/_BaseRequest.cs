@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace Reservation.Models.RequestModel
 {
+    /// <summary>
+    /// Tüm requestlerde ortak kullanılan istek bilgileri
+    /// </summary>
+    /// <typeparam name="T">İstek nesnelerinde değişken olarak bulunan alandır. Her endpoint için yeni bir model oluşturulmalıdır.</typeparam>
     public class _BaseRequest<T>
     {
         [JsonProperty("device-session")]

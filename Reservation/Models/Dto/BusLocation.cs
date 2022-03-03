@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Reservation.Models.Dto
 {
+    // konum listesi dto nesnesi
     public class BusLocation : _Dto
     {
         [JsonProperty("id")]
