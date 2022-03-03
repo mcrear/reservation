@@ -1,14 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Reservation.Models.ConfigModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Reservation.Helpers
@@ -38,23 +34,8 @@ namespace Reservation.Helpers
             }
             catch (Exception ex)
             {
-                //var res = JsonConvert.DeserializeObject<TResponse>(null);
-                //return res;
                 throw new AppException(ex.Message);
             }
-            //if (config.Value.UseAuthorization)
-            //{
-            //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(config.Value.AuthType, config.Value.Token);
-            //}
-            //var response = await client.PostAsync($"{config.Value.BaseUrl}/{path}",
-            //    new StringContent(
-            //        JsonConvert.SerializeObject(request),
-            //        Encoding.UTF8,
-            //        "application/json")).ConfigureAwait(false);
-            //var data = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-
-            //var res = JsonConvert.DeserializeObject<TResponse>(data);
-            //return res;
         }
     }
 }

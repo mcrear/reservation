@@ -113,10 +113,8 @@ function search() {
             type: 'POST',
             data: function (params) {
                 var query = {
-                    search: params.term,
-                    type: 'public'
+                    search: params.term
                 }
-                // Query parameters will be ?search=[term]&type=public
                 return query;
             },
             processResults: function (data) {
