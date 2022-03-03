@@ -8,6 +8,8 @@ namespace Reservation.Models.ViewModel
         public string DateInput { get; set; }
         public int SourceId { get; set; }
         public int DestinationId { get; set; }
+        public int SetSourceId { get; set; }
+        public int SetDestinationId { get; set; }
         public List<BusJourney> Journeys { get; set; }
 
         public JourneySearchModel()

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Reservation.Models.Dto;
 using Reservation.Models.RequestModel;
 using Reservation.Models.ResponseModel;
@@ -17,15 +19,24 @@ namespace Reservation.Controllers
         private readonly ILogger<JourneyController> _logger;
         private readonly ISessionService _sessionService;
         private readonly IJourneyService _journeyService;
-        public JourneyController(ILogger<JourneyController> logger, ISessionService sessionService, IJourneyService journeyService)
+        private readonly IDataProtector _protector;
+        public JourneyController(ILogger<JourneyController> logger, ISessionService sessionService, IJourneyService journeyService, IDataProtectionProvider provider)
         {
             _logger = logger;
             _sessionService = sessionService;
             _journeyService = journeyService;
+            _protector = provider.CreateProtector("test");
         }
         [HttpPost]
         public async Task<IActionResult> IndexAsync(JourneySearchModel model)
         {
+
+            model.SetSourceId = model.SourceId;
+            model.SetDestinationId = model.DestinationId;
+
+            var encryptText = _protector.Protect(JsonConvert.SerializeObject(model));
+            HttpContext.Response.Cookies.Append("search", encryptText);
+
             var deviceSession = await _sessionService.GetDeviceSession();
 
             BusJourneysResponseModel journeys = await _journeyService.GetBusJourneys(new BusJourneysRequestModel
