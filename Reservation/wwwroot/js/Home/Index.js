@@ -136,8 +136,6 @@ function search() {
             }
         }
     });
-
-    setExisting();
 }
 
 function changeId() {
